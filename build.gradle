@@ -1,0 +1,39 @@
+plugins {
+    id 'java'
+    id 'io.ebean' version '13.+'
+    id 'org.springframework.boot' version '2.+' apply false
+}
+
+group 'org.example'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "PASSED"
+        exceptionFormat "FULL"
+    }
+}
+
+dependencies {
+    annotationProcessor "io.ebean:querybean-generator:13.+"
+
+    // as per https://docs.spring.io/spring-boot/docs/2.4.5/gradle-plugin/reference/htmlsingle/#managing-dependencies-gradle-bom-support
+    implementation platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+
+    implementation "io.ebean:ebean:13.+"
+    implementation "io.ebean:ebean-migration:13.+"
+    implementation "io.ebean:ebean-querybean:13.+"
+    implementation "io.ebean:ebean-ddl-generator:13.+"
+    implementation 'org.postgresql:postgresql:42.+'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.+'
+    runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.+'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'io.ebean:ebean-test:13.+'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
